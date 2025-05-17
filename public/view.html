@@ -1,0 +1,32 @@
+<!DOCTYPE html>
+<html>
+<head><title>View Document</title></head>
+<body>
+  <h1>Document Details</h1>
+  <p><a href="index.html">🏠 Home</a></p>
+  <div id="doc"></div>
+  <script>
+    async function load() {
+      const params = new URLSearchParams(window.location.search);
+      const id = params.get('id');
+      if (!id) {
+        document.getElementById('doc').textContent = 'Missing document ID';
+        return;
+      }
+      const res = await fetch('/documents/' + id);
+      if (!res.ok) {
+        document.getElementById('doc').textContent = 'Document not found';
+        return;
+      }
+      const doc = await res.json();
+      document.getElementById('doc').innerHTML = `
+        <h2>${doc.filename}</h2>
+        <p><strong>Type:</strong> ${doc.type || 'Unknown'}</p>
+        <pre>${JSON.stringify(doc.extractedFields, null, 2)}</pre>
+        <pre>${doc.text}</pre>
+      `;
+    }
+    load();
+  </script>
+</body>
+</html>

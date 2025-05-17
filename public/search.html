@@ -1,0 +1,52 @@
+<!DOCTYPE html>
+<html>
+<head>
+  <title>Search Documents</title>
+  <style>
+    body { font-family: Arial, sans-serif; margin: 2em; }
+    h1 { color: #333; }
+    input[type="text"] { padding: 0.5em; width: 300px; }
+    button { padding: 0.5em 1em; }
+    #results div { margin-top: 1em; padding: 1em; border: 1px solid #ccc; border-radius: 5px; }
+    a { font-weight: bold; text-decoration: none; color: #0077cc; }
+  </style>
+</head>
+<body>
+  <h1>Search Documents</h1>
+  <p><a href="index.html">🏠 Home</a></p>
+
+  <input type="text" id="query" placeholder="Enter search term" />
+  <button onclick="search()">Search</button>
+
+  <div id="results"></div>
+
+  <script>
+    async function search() {
+      const q = document.getElementById('query').value.trim();
+      const container = document.getElementById('results');
+      container.innerHTML = '';
+
+      if (!q) {
+        container.textContent = 'Please enter a search term.';
+        return;
+      }
+
+      const res = await fetch('/search?q=' + encodeURIComponent(q));
+      const docs = await res.json();
+
+      if (!docs.length) {
+        container.textContent = 'No results found.';
+        return;
+      }
+
+      container.innerHTML = docs.map(doc => `
+        <div>
+          <a href="view.html?id=${doc.id}">${doc.filename}</a><br/>
+          <strong>Type:</strong> ${doc.type || 'N/A'}<br/>
+          <strong>Uploaded:</strong> ${new Date(doc.uploadedAt).toLocaleString()}
+        </div>
+      `).join('');
+    }
+  </script>
+</body>
+</html>
