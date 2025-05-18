@@ -1,7 +1,9 @@
+// service to build a prompt to Claude to ask open questions about the documents
+
 const { callClaude } = require('./anthropic');
 
 /**
- * Combines all document rawText and asks a question about them.
+ * Combines all document rawText and asks a question about them. TODO: add DB info as well as the raw files.
  * @param {Array} documents - Array of document objects.
  * @param {string} question - The user's natural language question.
  * @returns {Promise<string>} - Claude's answer.

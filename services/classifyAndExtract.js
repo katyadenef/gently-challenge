@@ -1,7 +1,11 @@
-// services/classifyAndExtract.js
+// generate prompt to classify a document and extract needed fields from uploaded document
 const { callClaude } = require('./anthropic');
 
 async function classifyAndExtract(rawText) {
+  /* The prompt ideally would include the full list of potential documents,
+  as well as the required fields for each document type.
+  This is also the place to pass the DB schema to Claude (can be fetched on the fly from PG)
+  */
   const prompt = `
     You are an intelligent document processing assistant.
 
@@ -27,7 +31,7 @@ async function classifyAndExtract(rawText) {
     return JSON.parse(responseText);
   } catch (err) {
     console.error('Failed to parse LLM response:', responseText);
-    return {
+    return { // in case of Claude failure we return blank result
       type: 'unknown',
       fields: {},
     };

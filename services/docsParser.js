@@ -1,10 +1,9 @@
-// services/docsParser.js
-
-// for the sake of simplicity supporting pdf and docx
+// service to parse an uploaded document to plain text
+// for the sake of simplicity supporting pdf and docx only
 
 const fs = require('fs');
-const pdfParse = require('pdf-parse');
-const mammoth = require('mammoth');
+const pdfParse = require('pdf-parse'); // for pdf
+const mammoth = require('mammoth'); // for docx
 
 async function extractTextFromFile(filePath, mimetype) {
   const buffer = fs.readFileSync(filePath);

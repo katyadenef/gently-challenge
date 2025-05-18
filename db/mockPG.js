@@ -1,5 +1,11 @@
 // instead of actually setting up a PG DB I am using JS in-memory object to store uploaded docs
 
+/* TODO
+1. The tables and the exact list of expected fields per document type need to be predefined.
+2. Original raw document needs to be stored (e.g., in S3)
+*/
+
+// This is a small list of predefined documents so the system has something to work with before the first upload.
 const documents = [
   {
     id: 1,
