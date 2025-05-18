@@ -57,8 +57,11 @@ module.exports = (documents) => {
       console.error('Processing failed:', err.message);
     }
 
-    // add the new document to the DB
-    // TODO need smart handling of the exact fields we require for our DB: shouldn't push to DB if some crucial fields are not available 
+    /* add the new document to the DB
+    TODO:
+    1. need smart handling of the exact fields we require for our DB: shouldn't push to DB if some crucial fields are not available 
+    2. we should be able to connect a document to a known customer/supplier, setup a new one or escalate to human if none exists
+    */
     documents.push(newDoc);
 
     res.json({ message: 'File uploaded and processed', document: newDoc });
